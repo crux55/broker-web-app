@@ -21,14 +21,34 @@ def error_test():
 @app.route("/buy", methods=['POST'])
 def simple_buy():
     symbol = request.json['symbol']
-    fxcm_client.open_long(symbol, request.json['amount'])
+    stop = None
+    trailing = None
+    try:
+        stop = request.json['stop']
+    except KeyError:
+        pass
+    try:
+        trailing = request.json['trailing']
+    except KeyError:
+        pass
+    fxcm_client.open_long(symbol, request.json['amount'], stop, trailing)
     return "Longed: {}".format(symbol), 200
 
 
 @app.route("/sell", methods=['POST'])
 def simple_sell():
     symbol = request.json['symbol']
-    fxcm_client.open_short(symbol, request.json['amount'])
+    stop = None
+    trailing = None
+    try:
+        stop = request.json['stop']
+    except KeyError:
+        pass
+    try:
+        trailing = request.json['trailing']
+    except KeyError:
+        pass
+    fxcm_client.open_short(symbol, request.json['amount'], stop, trailing)
     return "Shorted: {}".format(symbol), 200
 
 
