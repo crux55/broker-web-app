@@ -127,4 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/config/fxcm.cfg
+/.idea/
+config/fxcm.cfg
