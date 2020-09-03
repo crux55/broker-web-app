@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask
+from api.request_objects import TradeRequest, convert_input_to
 from service.fxcm_client import FXCMClient
 
 
@@ -18,40 +19,20 @@ def error_test():
     return "Error", 400
 
 
-@app.route("/buy", methods=['POST'])
-def simple_buy():
-    symbol = request.json['symbol']
-    stop = None
-    trailing = None
-    try:
-        stop = request.json['stop']
-    except KeyError:
-        pass
-    try:
-        trailing = request.json['trailing']
-    except KeyError:
-        pass
-    fxcm_client.open_long(symbol, request.json['amount'], stop, trailing)
-    return "Longed: {}".format(symbol), 200
+@app.route("/buy", methods=['POST'], endpoint='simple_buy')
+@convert_input_to(TradeRequest)
+def simple_buy(trade_request):
+    fxcm_client.open_long(trade_request)
+    return "Longed: {}".format(trade_request.symbol), 200
 
 
-@app.route("/sell", methods=['POST'])
-def simple_sell():
-    symbol = request.json['symbol']
-    stop = None
-    trailing = None
-    try:
-        stop = request.json['stop']
-    except KeyError:
-        pass
-    try:
-        trailing = request.json['trailing']
-    except KeyError:
-        pass
-    fxcm_client.open_short(symbol, request.json['amount'], stop, trailing)
-    return "Shorted: {}".format(symbol), 200
+@app.route("/sell", methods=['POST'], endpoint='simple_sell')
+@convert_input_to(TradeRequest)
+def simple_sell(trade_request):
+    fxcm_client.open_short(trade_request)
+    return "Shorted: {}".format(trade_request.symbol), 200
 
 
-if __name__ == "__main__":        # on running python main.py
+if __name__ == "__main__":
     print('Starting web app')
-    app.run(host='0.0.0.0', port=8080)                     # run the flask app
+    app.run(host='0.0.0.0', port=8080)
