@@ -1,25 +1,26 @@
 import fxcmpy
 
+
 class FXCMClient:
 
     def __init__(self):
         self.socket = fxcmpy.fxcmpy(config_file='config/fxcm.cfg', server='demo')
 
-    def open_long(self, symbol, amount):
+    def open_long(self, symbol, amount, stop, trailing):
         self.close_shorts(symbol, amount)
         trade = self.socket.open_trade(symbol=symbol, is_buy=True,
                                        is_in_pips=True,
                                        amount=amount, time_in_force='GTC',
-                                       order_type='AtMarket')
+                                       order_type='AtMarket', stop=stop, trailing_step=trailing)
         print("Opening long: {}".format(trade))
         return trade
 
-    def open_short(self, symbol, amount):
-        self.close_longs(symbol, amount)
+    def open_short(self, symbol, amount, stop, trailing):
+
         trade = self.socket.open_trade(symbol=symbol, is_buy=False,
                                        is_in_pips=True,
                                        amount=amount, time_in_force='GTC',
-                                       order_type='AtMarket')
+                                       order_type='AtMarket', stop=stop, trailing_step=trailing)
         print("Opening short: {}".format(trade))
         return trade
 
