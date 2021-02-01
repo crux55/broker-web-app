@@ -2,8 +2,9 @@ import fxcmpy
 
 class FXCMClient:
 
-    def __init__(self):
-        self.socket = fxcmpy.fxcmpy(config_file='config/fxcm.cfg', server='demo')
+    def __init__(self, live=True):
+        if live:
+            self.socket = fxcmpy.fxcmpy(config_file='config/fxcm.cfg', server='demo')
 
     def open_long(self, trade_request):
         if trade_request.flipping:
