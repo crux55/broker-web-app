@@ -19,6 +19,13 @@ def error_test():
     return "Error", 400
 
 
+@app.route("/objecttest", methods=['POST'], endpoint='simple_objtest')
+@convert_input_to(TradeRequest)
+def obj_test(traderequest):
+    print(traderequest)
+    return "", 200
+
+
 @app.route("/buy", methods=['POST'], endpoint='simple_buy')
 @convert_input_to(TradeRequest)
 def simple_buy(trade_request):
