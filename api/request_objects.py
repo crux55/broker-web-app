@@ -1,7 +1,7 @@
 from collections import namedtuple
 from flask import request
 
-TradeRequest = namedtuple('TradeRequest', 'symbol amount stop trailing flipping')
+TradeRequest = namedtuple('TradeRequest', 'symbol amount stop trailing flipping allow_multi')
 
 
 def convert_input_to(class_):
