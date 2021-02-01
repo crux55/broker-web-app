@@ -2,3 +2,5 @@
 .git
 .gitignore
 .idea
+out.txt
+venv
