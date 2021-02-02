@@ -29,6 +29,9 @@ def obj_test(traderequest):
 @app.route("/buy", methods=['POST'], endpoint='simple_buy')
 @convert_input_to(TradeRequest)
 def simple_buy(trade_request):
+    print("==================")
+    print("  Long requested")
+    print("==================")
     fxcm_client.open_long(trade_request)
     return "Longed: {}".format(trade_request.symbol), 200
 
@@ -36,6 +39,9 @@ def simple_buy(trade_request):
 @app.route("/sell", methods=['POST'], endpoint='simple_sell')
 @convert_input_to(TradeRequest)
 def simple_sell(trade_request):
+    print("==================")
+    print(" Short requested")
+    print("==================")
     fxcm_client.open_short(trade_request)
     return "Shorted: {}".format(trade_request.symbol), 200
 
