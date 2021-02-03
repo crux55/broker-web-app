@@ -1,6 +1,6 @@
 {
-  "symbol":"AUD/JPY",
-  "amount":80,
+  "symbol":"AUS200",
+  "amount":37,
   "stop": -12,
   "trailing": "1.0",
   "flipping": true,

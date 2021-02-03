@@ -1,6 +1,6 @@
 {
-  "symbol":"AUD/JPY",
-  "amount":80,
+  "symbol":"GBP/AUD",
+  "amount":40,
   "stop": -12,
   "trailing": "1.0",
   "flipping": true,

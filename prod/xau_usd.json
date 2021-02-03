@@ -1,7 +1,7 @@
 {
-  "symbol":"AUD/JPY",
-  "amount":80,
-  "stop": -12,
+  "symbol":"XAU/USD",
+  "amount":17,
+  "stop": -120,
   "trailing": "1.0",
   "flipping": true,
   "allow_multi": false,
