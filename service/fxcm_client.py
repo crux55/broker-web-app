@@ -16,9 +16,10 @@ class FXCMClient:
         trade = self.socket.open_trade(symbol=trade_request.symbol, is_buy=True,
                                        is_in_pips=True,
                                        amount=trade_request.amount, time_in_force='GTC',
-                                       order_type='AtMarket')
-                                        # , stop=trade_request.stop,
-                                       # trailing_step=trade_request.trailing)
+                                       order_type='AtMarket',
+                                       limit=trade_request.limit,
+                                       stop=trade_request.stop,
+                                       trailing_step=float(trade_request.trailing))
         print("Opening long: {}".format(trade))
         return trade
 
@@ -32,9 +33,10 @@ class FXCMClient:
         trade = self.socket.open_trade(symbol=trade_request.symbol, is_buy=False,
                                        is_in_pips=True,
                                        amount=trade_request.amount, time_in_force='GTC',
-                                       order_type='AtMarket')
-                                       # , stop=trade_request.stop,
-                                       # trailing_step=trade_request.trailing)
+                                       order_type='AtMarket',
+                                       limit=trade_request.limit,
+                                       stop=trade_request.stop,
+                                       trailing_step=float(trade_request.trailing))
         print("Opening short: {}".format(trade))
         return trade
 
@@ -65,9 +67,20 @@ class FXCMClient:
 
     def close_shorts(self, trade_request):
         print("Closing shorts")
-        ids = self.get_open_longs(trade_request.symbol)
+        ids = self.get_open_shorts(trade_request.symbol)
         print("{} short ids found".format(len(ids)))
         for i in range(len(ids)):
             trade = self.socket.close_trade(ids[i], trade_request.amount, time_in_force='GTC',
                                             order_type='AtMarket')
             print("Closing short: {}".format(trade))
+
+    def trade_to_object(self, trade):
+        new_trade = {}
+        for param in trade.parameter:
+            new_trade[param] = trade.__getattr(param)
+
+    def close_id(self, id, amount):
+        return self.socket.close_trade(id, amount=amount)
+
+    def close_all(self):
+        return self.socket.close_all()

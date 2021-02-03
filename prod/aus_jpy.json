@@ -1,0 +1,9 @@
+{
+  "symbol":"AUD/JPY",
+  "amount":80,
+  "stop": -40,
+  "trailing": ".5",
+  "flipping": true,
+  "allow_multi": false,
+  "limit": 160
+}

@@ -1,12 +1,25 @@
-from flask import Flask
+from flask import Flask, request
 from api.request_objects import TradeRequest, convert_input_to
 from service.fxcm_client import FXCMClient
-
+import json
 
 app = Flask(__name__)
 print('Starting client...')
 fxcm_client = FXCMClient()
 print('Client started')
+
+def reqursive_to_json(obj):
+    _json = {}
+
+    if isinstance(obj, tuple):
+        datas = obj._asdict()
+        for data in datas:
+            if isinstance(datas[data], tuple):
+                _json[data] = (reqursive_to_json(datas[data]))
+            else:
+                print(datas[data])
+            _json[data] = (datas[data])
+    return _json
 
 
 @app.route("/")
@@ -23,7 +36,7 @@ def error_test():
 @convert_input_to(TradeRequest)
 def obj_test(traderequest):
     print(traderequest)
-    return "", 200
+    return reqursive_to_json(traderequest), 200
 
 
 @app.route("/buy", methods=['POST'], endpoint='simple_buy')
@@ -32,8 +45,8 @@ def simple_buy(trade_request):
     print("==================")
     print("  Long requested")
     print("==================")
-    fxcm_client.open_long(trade_request)
-    return "Longed: {}".format(trade_request.symbol), 200
+    trade = fxcm_client.open_long(trade_request)
+    return str(trade.get_tradeId()), 200
 
 
 @app.route("/sell", methods=['POST'], endpoint='simple_sell')
@@ -42,8 +55,20 @@ def simple_sell(trade_request):
     print("==================")
     print(" Short requested")
     print("==================")
-    fxcm_client.open_short(trade_request)
-    return "Shorted: {}".format(trade_request.symbol), 200
+    trade = fxcm_client.open_short(trade_request)
+    return str(trade.get_tradeId()), 200
+
+@app.route("/close", methods=['GET'], endpoint='simple_close')
+def simple_close():
+    id = request.args.get('id')
+    amount = request.args.get('amount')
+    fxcm_client.close_id(id, amount)
+    return "", 200
+
+@app.route("/closeall", methods=['GET'], endpoint='close_all')
+def simple_close():
+    fxcm_client.close_all()
+    return "", 200
 
 
 if __name__ == "__main__":
