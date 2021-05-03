@@ -1,7 +1,7 @@
 from flask import Flask, request
 from api.request_objects import TradeRequest, convert_input_to
 from service.fxcm_client import FXCMClient
-import json
+
 
 app = Flask(__name__)
 print('Starting client...')
@@ -68,6 +68,14 @@ def simple_close():
 @app.route("/closeall", methods=['GET'], endpoint='close_all')
 def simple_close():
     fxcm_client.close_all()
+    return "", 200
+
+@app.route("/dump", methods=['POST'], endpoint='dump')
+def dump():
+    print("test")
+    print(request.get_json())
+    # logging.info("test")
+    # logging.info(request.get_json())
     return "", 200
 
 
