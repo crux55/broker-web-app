@@ -1,8 +1,9 @@
 {
+  "action": "YYY",
   "symbol":"AUD/JPY",
   "amount":80,
-  "stop": -12,
-  "trailing": "1.0",
+  "stop": null,
+  "trailing": "0",
   "flipping": true,
   "allow_multi": false,
   "limit": null

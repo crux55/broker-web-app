@@ -1,8 +1,9 @@
 {
+  "action": "YYY",
   "symbol":"AUS200",
   "amount":37,
-  "stop": -12,
-  "trailing": "1.0",
+  "stop": null,
+  "trailing": "0",
   "flipping": true,
   "allow_multi": false,
   "limit": null

@@ -1,8 +1,9 @@
 {
+  "action": "YYY",
   "symbol":"XAU/USD",
   "amount":17,
-  "stop": -120,
-  "trailing": "1.0",
+  "stop": null,
+  "trailing": "0",
   "flipping": true,
   "allow_multi": false,
   "limit": null
